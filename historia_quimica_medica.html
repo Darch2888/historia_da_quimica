@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A História da Química Médica</title>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --parchment: #f4e8d0;
+            --ink: #2c1810;
+            --gold: #c9a961;
+            --bronze: #8b6914;
+            --sepia: #704214;
+            --aged: #e6d5b8;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #1a1410;
+            color: var(--ink);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Textura de papel antigo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0,0,0,.03) 2px,
+                    rgba(0,0,0,.03) 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0,0,0,.03) 2px,
+                    rgba(0,0,0,.03) 4px
+                );
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .page-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Manuscrito principal */
+        .manuscript {
+            background: var(--parchment);
+            background-image: 
+                radial-gradient(ellipse at 30% 40%, rgba(139, 105, 20, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(112, 66, 20, 0.05) 0%, transparent 50%);
+            box-shadow: 
+                0 0 50px rgba(0, 0, 0, 0.5),
+                inset 0 0 100px rgba(139, 105, 20, 0.1),
+                0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 3px solid var(--bronze);
+            border-radius: 5px;
+            position: relative;
+            margin: 40px auto;
+            padding: 60px;
+        }
+
+        /* Bordas decorativas estilo medieval */
+        .manuscript::before,
+        .manuscript::after {
+            content: '';
+            position: absolute;
+            background: var(--gold);
+            opacity: 0.4;
+        }
+
+        .manuscript::before {
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 2px;
+        }
+
+        .manuscript::after {
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            height: 2px;
+        }
+
+        /* Ornamentos de canto */
+        .corner-ornament {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0.3;
+        }
+
+        .corner-ornament.top-left {
+            top: 20px;
+            left: 20px;
+            border-top: 3px solid var(--bronze);
+            border-left: 3px solid var(--bronze);
+        }
+
+        .corner-ornament.top-right {
+            top: 20px;
+            right: 20px;
+            border-top: 3px solid var(--bronze);
+            border-right: 3px solid var(--bronze);
+        }
+
+        .corner-ornament.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            border-bottom: 3px solid var(--bronze);
+            border-left: 3px solid var(--bronze);
+        }
+
+        .corner-ornament.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-bottom: 3px solid var(--bronze);
+            border-right: 3px solid var(--bronze);
+        }
+
+        /* Cabeçalho decorativo */
+        header {
+            text-align: center;
+            padding: 40px 20px 60px;
+            border-bottom: 3px double var(--bronze);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .illuminated-letter {
+            font-size: 80px;
+            font-family: 'Cinzel', serif;
+            color: var(--sepia);
+            line-height: 1;
+            text-shadow: 2px 2px 0 var(--gold);
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            color: var(--sepia);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0 rgba(201, 169, 97, 0.3);
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-family: 'IM Fell English', serif;
+            font-size: 1.3em;
+            color: var(--bronze);
+            font-style: italic;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        /* Vinheta decorativa */
+        .vignette {
+            text-align: center;
+            margin: 50px 0;
+            font-size: 2em;
+            color: var(--bronze);
+            position: relative;
+        }
+
+        .vignette::before,
+        .vignette::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            font-size: 0.6em;
+        }
+
+        .vignette::before {
+            left: 30%;
+        }
+
+        .vignette::after {
+            right: 30%;
+        }
+
+        /* Seções com iniciais iluminadas */
+        .section {
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.7em;
+            color: var(--sepia);
+            margin-bottom: 25px;
+            text-align: center;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .section-content {
+            position: relative;
+        }
+
+        .drop-cap::first-letter {
+            font-family: 'Cinzel', serif;
+            float: left;
+            font-size: 4em;
+            line-height: 0.85;
+            margin: 5px 10px 0 0;
+            color: var(--sepia);
+            text-shadow: 2px 2px 0 var(--gold);
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.9;
+            margin-bottom: 30px;
+            text-align: justify;
+            text-indent: 2em;
+            color: var(--ink);
+            hyphens: auto;
+        }
+
+        p:first-of-type {
+            text-indent: 0;
+            margin-top: 10px;
+        }
+
+        /* Caixa de curiosidades estilo pergaminho antigo */
+        .curiosidades-box {
+            background: var(--aged);
+            border: 3px solid var(--bronze);
+            border-radius: 3px;
+            padding: 50px;
+            margin: 80px 0;
+            position: relative;
+            box-shadow: 
+                inset 0 0 30px rgba(112, 66, 20, 0.1),
+                0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .curiosidades-box::before {
+            content: '✦';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            color: var(--bronze);
+            background: var(--parchment);
+            padding: 0 20px;
+        }
+
+        .curiosidades-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.7em;
+            color: var(--sepia);
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .curiosidades-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .curiosidades-list li {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            padding-left: 40px;
+            position: relative;
+            color: var(--ink);
+        }
+
+        .curiosidades-list li::before {
+            content: '❧';
+            position: absolute;
+            left: 0;
+            color: var(--bronze);
+            font-size: 1.5em;
+        }
+
+        /* Biografias estilo códice */
+        .biografias {
+            margin: 90px 0;
+        }
+
+        .biografias-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.3em;
+            color: var(--sepia);
+            text-align: center;
+            margin-bottom: 70px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .biografia-card {
+            background: var(--aged);
+            border: 4px double var(--bronze);
+            border-radius: 3px;
+            padding: 50px;
+            margin-bottom: 60px;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .biografia-card::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid var(--gold);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .biografia-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.9em;
+            color: var(--sepia);
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .biografia-content p {
+            text-indent: 2em;
+            margin-bottom: 30px;
+        }
+
+        .biografia-content p:first-of-type {
+            text-indent: 0;
+        }
+
+        /* Separador ornamental */
+        .ornamental-separator {
+            text-align: center;
+            margin: 60px 0;
+            font-size: 2.5em;
+            color: var(--bronze);
+            position: relative;
+        }
+
+        .ornamental-separator::before,
+        .ornamental-separator::after {
+            content: '────';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            opacity: 0.5;
+            font-size: 0.4em;
+            letter-spacing: 5px;
+        }
+
+        .ornamental-separator::before {
+            right: 55%;
+            margin-right: 20px;
+        }
+
+        .ornamental-separator::after {
+            left: 55%;
+            margin-left: 20px;
+        }
+
+        /* Menu de navegação */
+        .navigation {
+            background: var(--aged);
+            border: 3px solid var(--bronze);
+            border-radius: 3px;
+            padding: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: var(--sepia);
+            text-align: center;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .nav-button {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--parchment);
+            background: linear-gradient(135deg, var(--bronze), var(--sepia));
+            border: 2px solid var(--gold);
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201, 169, 97, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(201, 169, 97, 0.5);
+            border-color: var(--parchment);
+        }
+
+        .nav-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            margin-top: 80px;
+            border-top: 3px double var(--bronze);
+        }
+
+        footer p {
+            font-family: 'IM Fell English', serif;
+            font-size: 1.15em;
+            color: var(--bronze);
+            font-style: italic;
+            text-indent: 0;
+            text-align: center;
+        }
+
+        /* Efeitos de envelhecimento */
+        .aged-spot {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 105, 20, 0.15), transparent);
+            pointer-events: none;
+        }
+
+        /* Animações sutis */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .manuscript {
+                padding: 50px 40px;
+            }
+
+            h1 {
+                font-size: 3em;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .manuscript {
+                padding: 40px 25px;
+                margin: 20px auto;
+            }
+
+            .navigation {
+                padding: 15px;
+            }
+
+            .nav-title {
+                font-size: 1.1em;
+                margin-bottom: 12px;
+            }
+
+            .nav-buttons {
+                gap: 10px;
+            }
+
+            .nav-button {
+                font-size: 0.95em;
+                padding: 10px 18px;
+            }
+
+            .illuminated-letter {
+                font-size: 80px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+                letter-spacing: 2px;
+            }
+
+            .subtitle {
+                font-size: 1.3em;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .drop-cap::first-letter {
+                font-size: 3.5em;
+            }
+
+            p {
+                font-size: 1.1em;
+                text-indent: 1.5em;
+            }
+
+            .curiosidades-box {
+                padding: 30px 20px;
+            }
+
+            .biografia-card {
+                padding: 30px 20px;
+            }
+
+            .vignette::before {
+                left: 20%;
+            }
+
+            .vignette::after {
+                right: 20%;
+            }
+
+            .corner-ornament {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .manuscript {
+                padding: 30px 15px;
+            }
+
+            .navigation {
+                padding: 12px;
+            }
+
+            .nav-title {
+                font-size: 1em;
+            }
+
+            .nav-buttons {
+                gap: 8px;
+            }
+
+            .nav-button {
+                font-size: 0.85em;
+                padding: 8px 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                letter-spacing: 1px;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            .illuminated-letter {
+                font-size: 60px;
+            }
+
+            .section-title {
+                font-size: 1.4em;
+            }
+
+            p {
+                font-size: 1em;
+                text-align: left;
+            }
+
+            .curiosidades-list li {
+                font-size: 1em;
+                padding-left: 30px;
+            }
+
+            .biografia-name {
+                font-size: 1.6em;
+            }
+
+            .biografias-title {
+                font-size: 2em;
+            }
+
+            .vignette::before,
+            .vignette::after {
+                display: none;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1300px;
+            }
+
+            .manuscript {
+                padding: 80px;
+            }
+
+            h1 {
+                font-size: 4em;
+            }
+
+            p {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <div class="manuscript">
+                <div class="corner-ornament top-left"></div>
+                <div class="corner-ornament top-right"></div>
+                <div class="corner-ornament bottom-left"></div>
+                <div class="corner-ornament bottom-right"></div>
+
+                <!-- Manchas de envelhecimento -->
+                <div class="aged-spot" style="width: 100px; height: 100px; top: 10%; left: 5%;"></div>
+                <div class="aged-spot" style="width: 80px; height: 80px; top: 60%; right: 8%;"></div>
+                <div class="aged-spot" style="width: 120px; height: 120px; bottom: 15%; left: 10%;"></div>
+
+                <header>
+                    <div class="illuminated-letter">⚕</div>
+                    <h1>A História da<br>Química Médica</h1>
+                    <p class="subtitle">Da alquimia às descobertas que salvaram vidas</p>
+                </header>
+
+                <!-- Menu de Navegação -->
+                <nav class="navigation">
+                    <div class="nav-title">⚜ Índice do Manuscrito ⚜</div>
+                    <div class="nav-buttons">
+                        <a href="#pocoes" class="nav-button">⚗️ Poções Místicas</a>
+                        <a href="#revolucao" class="nav-button">📚 Revolução</a>
+                        <a href="#medicamentos" class="nav-button">💊 Medicamentos</a>
+                        <a href="#legado" class="nav-button">🏛️ Legado</a>
+                        <a href="#curiosidades" class="nav-button">✨ Curiosidades</a>
+                        <a href="#mestres" class="nav-button">👨‍🔬 Grandes Mestres</a>
+                    </div>
+                </nav>
+
+                <div class="vignette">⚜</div>
+
+                <section id="pocoes" class="section fade-in">
+                    <h2 class="section-title">Das Poções Místicas à Ciência</h2>
+                    <div class="section-content">
+                        <p class="drop-cap">
+                            Desde os tempos antigos, o ser humano busca compreender as substâncias da natureza para curar doenças e aliviar o sofrimento. A Química Médica nasceu dessa curiosidade — misturando experimentos, erros e descobertas que mudaram o rumo da medicina.
+                        </p>
+                        <p>
+                            No início, os alquimistas acreditavam que metais e líquidos misteriosos poderiam transformar o corpo humano e trazer o 'elixir da vida'. Mesmo sem entender os processos químicos, eles abriram o caminho para o surgimento da ciência moderna.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="revolucao" class="section fade-in">
+                    <h2 class="section-title">A Revolução do Conhecimento</h2>
+                    <div class="section-content">
+                        <p class="drop-cap">
+                            No século XVI, o médico Paracelso revolucionou o pensamento ao afirmar que 'a dose faz o veneno'. Com essa ideia, ele mostrou que uma mesma substância pode curar ou intoxicar — dependendo da quantidade usada. Foi o primeiro passo para o uso racional de compostos químicos na medicina.
+                        </p>
+                        <p>
+                            Com o tempo, cientistas como Lavoisier e Priestley descobriram elementos fundamentais como o oxigênio e o hidrogênio, tornando a química uma ciência baseada em observação e prova.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="medicamentos" class="section fade-in">
+                    <h2 class="section-title">A Era dos Medicamentos Modernos</h2>
+                    <div class="section-content">
+                        <p class="drop-cap">
+                            No século XIX, a química orgânica permitiu o isolamento de substâncias naturais — como a morfina e a quinina —, e logo depois surgiram os primeiros medicamentos sintéticos.
+                        </p>
+                        <p>
+                            No século XX, a descoberta da penicilina por Alexander Fleming deu início à era dos antibióticos, salvando milhões de vidas. Desde então, a química médica evolui com o apoio da tecnologia, criando remédios cada vez mais precisos e seguros.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="legado" class="section fade-in">
+                    <h2 class="section-title">O Legado que Salva Vidas</h2>
+                    <div class="section-content">
+                        <p class="drop-cap">
+                            A história da química médica mostra como a curiosidade humana e a busca pelo conhecimento transformaram a alquimia em ciência. De frascos e poções misteriosas surgiram os medicamentos modernos que hoje tratam infecções, aliviam dores e prolongam a vida.
+                        </p>
+                        <p>
+                            Assim, cada frasco, balança e tubo de ensaio em nosso 'laboratório antigo' representa o início de uma jornada que continua até hoje — a jornada da química a serviço da saúde e da vida.
+                        </p>
+                    </div>
+                </section>
+
+                <div id="curiosidades" class="curiosidades-box">
+                    <h3 class="curiosidades-title">Curiosidades Notáveis</h3>
+                    <ul class="curiosidades-list">
+                        <li>Paracelso é considerado o pai da química médica.</li>
+                        <li>Muitos remédios antigos usavam metais tóxicos, como mercúrio e chumbo.</li>
+                        <li>A quinina, usada contra a malária, vem de uma planta chamada quina.</li>
+                        <li>O primeiro antibiótico do mundo foi a penicilina, descoberta por acaso.</li>
+                    </ul>
+                </div>
+
+                <div id="mestres" class="biografias">
+                    <h2 class="biografias-title">Os Grandes Mestres</h2>
+
+                    <div class="biografia-card">
+                        <h3 class="biografia-name">Philippus Aureolus Paracelso</h3>
+                        <div class="biografia-content">
+                            <p class="drop-cap">
+                                Conhecido como Paracelso, foi um médico, filósofo, alquimista, iatroquímico e astrólogo, nascido na Suíça. Ele revolucionou a medicina de seu tempo, usando a química. Questionava os ensinamentos de Hipócrates e Galeno que se baseavam na Teoria dos Quatro Humores, que dizia que a saúde dependia do equilíbrio entre os quatro fluidos corporais: sangue, fleuma, bílis amarela e bílis negra.
+                            </p>
+                            <p>
+                                Paracelso é considerado o idealizador da farmacologia moderna, e em sua obra Paramirum, ele destacou a importância da observação clínica do paciente, dosagem correta para eficácia de um tratamento e recomendou a limpeza de feridas para remover pus e tecidos mortos.
+                            </p>
+                            <p>
+                                Em suas experiências alquimistas, procurou a busca pelo bálsamo para a cura de todos os males, que ele chamava de múmia. Paracelso usou seu conhecimento de alquimia para criar medicamentos e não para a transformação de metais em ouro.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="ornamental-separator">❦</div>
+
+                    <div class="biografia-card">
+                        <h3 class="biografia-name">Franciscus Sylvios</h3>
+                        <div class="biografia-content">
+                            <p class="drop-cap">
+                                Nasceu em 15 de março de 1614 na Alemanha, foi um médico, fisiologista, anatomista e químico, considerado o fundador da escola Iatroquímica de medicina do século XVII. Ele defendia que todos os fenômenos da vida e da doença se baseavam na ação química. Seus estudos ajudaram a transformar a medicina mística para uma aplicação racional das leis universais da física e da química.
+                            </p>
+                            <p>
+                                Baseou seu sistema médico na descoberta da circulação do sangue feita pelo anatomista inglês William Harvey, mantendo dentro da estrutura geral das teorias humorais do médico grego Galeno. Sylvios sentiu que os processos mais importantes da vida normal e patológica ocorrem no sangue e que as doenças deveriam ser explicadas e tratadas quimicamente.
+                            </p>
+                            <p>
+                                Ele reconhecia a existência de sais na matéria viva e concluiu que eles eram o resultado de uma interação de ácidos e bases; sendo assim, criou a hipótese que os desequilíbrios químicos consistem em um excesso de ácido (acidose) ou de álcali (alcalose) no sangue, e desenvolveu medicamentos para neutralizar essas condições.
+                            </p>
+                            <p>
+                                Sylvios foi um dos professores de medicina mais destacados da Europa. Foi um dos primeiros a introduzir o ensino de medicina em enfermarias e impulsionou a construção do primeiro laboratório universitário de química. Ele foi o primeiro a diferenciar dois tipos de glândulas: as Conglomeradas e as Conglobadas. Ele também descobriu a fenda profunda que separa os lobos temporal inferior, frontal e parietal do cérebro.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vignette">⚜</div>
+
+                <footer>
+                    <p>A jornada da química a serviço da saúde e da vida</p>
+                    <div class="vignette" style="margin: 30px 0 20px;">✦</div>
+                    <p style="font-size: 0.95em; margin-top: 25px; opacity: 0.8;">Feito por Catarina Petry</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll para navegação
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    const yOffset = -120;
+                    const y = targetSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    
+                    window.scrollTo({
+                        top: y,
+                        behavior: 'smooth'
+                    });
+                }
+                
+                return false;
+            });
+        });
+
+        // Destacar botão ativo ao rolar
+        let isScrolling = false;
+        
+        window.addEventListener('scroll', function() {
+            if (!isScrolling) {
+                window.requestAnimationFrame(function() {
+                    const sections = document.querySelectorAll('section[id], div[id]');
+                    const navButtons = document.querySelectorAll('.nav-button');
+                    const scrollPosition = window.scrollY + 200;
+                    
+                    let current = '';
+                    
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        const sectionHeight = section.offsetHeight;
+                        
+                        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+                    
+                    navButtons.forEach(button => {
+                        const buttonHref = button.getAttribute('href').substring(1);
+                        
+                        if (buttonHref === current) {
+                            button.style.background = 'linear-gradient(135deg, var(--gold), var(--bronze))';
+                            button.style.transform = 'scale(1.05)';
+                            button.style.boxShadow = '0 5px 15px rgba(201, 169, 97, 0.6)';
+                        } else {
+                            button.style.background = 'linear-gradient(135deg, var(--bronze), var(--sepia))';
+                            button.style.transform = 'scale(1)';
+                            button.style.boxShadow = '0 3px 10px rgba(0, 0, 0, 0.3)';
+                        }
+                    });
+                    
+                    isScrolling = false;
+                });
+                
+                isScrolling = true;
+            }
+        });
+
+        // Trigger inicial
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
